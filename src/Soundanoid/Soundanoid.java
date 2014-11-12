@@ -24,7 +24,10 @@ public class Soundanoid extends JPanel {
 
     Ball ball = new Ball(this, 50, 0);
     Racquet racquet = new Racquet(this);
-
+    
+    int score = 0;
+    int speed = 3;
+    
     private void move() throws InterruptedException {
         ball.move();
         racquet.move();
@@ -58,11 +61,12 @@ public class Soundanoid extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         ball.paint(g2d);
+        g2d.setColor(Color.red);
         racquet.paint(g2d);
-
+        
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Helvetica", Font.BOLD, 15));
-        g2d.drawString("Score " + ball.score, 10, 30);
+        g2d.drawString("Score " + score, 10, 30);
 
     }
 
@@ -71,7 +75,6 @@ public class Soundanoid extends JPanel {
         Soundanoid game = new Soundanoid();
         frame.add(game);
         frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
         frame.setSize(400, 500);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

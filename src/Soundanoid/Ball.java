@@ -15,11 +15,13 @@ import java.awt.Toolkit;
  */
 public class Ball {
 
+    private static final int DIAMETER = 30;
+
     int x = 0;
     int y = 0;
     int xa = 3;
     int ya = 3;
-    int score = 0;
+    
     private Soundanoid game;
 
     public Ball(Soundanoid game, int x, int y) {
@@ -31,25 +33,36 @@ public class Ball {
     void move() throws InterruptedException {
 
         if (x + xa < 0) {
-            xa = 3;
+            xa = game.speed;
+            Sound.WALL_LEFT.play();
         }
-        if (x + xa > game.getWidth() - 30) {
-            xa = -3;
+        if (x + xa > game.getWidth() - DIAMETER) {
+            xa = -game.speed;
+            Sound.WALL_RIGHT.play();
         }
         if (y + ya < 0) {
-            ya = 3;
+            ya = game.speed;
+            Sound.WALL_TOP.play();
         }
 
-        if (y + ya > game.getHeight() - 30) {
+        if (y + ya > game.getHeight() - DIAMETER) {
             Sound.GAMEOVER.play();
-            
             game.gameOver();
         }
         if (collision()) {
-            score++;
+            game.score++;
             Sound.RACQUET.play();
             ya = -3;
-            y = game.racquet.getTopY() - 30;
+            y = game.racquet.getTopY() - DIAMETER;
+
+            switch(game.score){
+                case 5: game.speed = 4;
+                        break;
+                case 10: game.speed = 5;
+                        break;
+                case 15: game.speed = 8;
+                        break;
+            }
         }
 
         x += xa;
@@ -57,11 +70,11 @@ public class Ball {
     }
 
     public void paint(Graphics2D g) {
-        g.fillOval(x, y, 30, 30);
+        g.fillOval(x, y, DIAMETER, DIAMETER);
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, y, 30, 30);
+        return new Rectangle(x, y, DIAMETER, DIAMETER);
     }
 
     private boolean collision() {
