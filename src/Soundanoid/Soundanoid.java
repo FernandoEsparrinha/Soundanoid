@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  */
 public class Soundanoid extends JPanel {
 
-    Ball ball = new Ball(this, 50, 0);
+    Ball ball = new Ball(this, 125, 0);
     Racquet racquet = new Racquet(this);
     
     int score = 0;
@@ -60,9 +60,11 @@ public class Soundanoid extends JPanel {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        ball.paint(g2d);
         g2d.setColor(Color.red);
+        ball.paint(g2d);
+        g2d.setColor(Color.LIGHT_GRAY);
         racquet.paint(g2d);
+        
         
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Helvetica", Font.BOLD, 15));
