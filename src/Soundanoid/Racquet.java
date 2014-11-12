@@ -18,7 +18,7 @@ public class Racquet {
     int xa = 0;
     private Soundanoid game;
 
-    private static final int Y = 430;
+    private static final int Y = 510;
     private static final int WIDTH = 60;
     private static final int HEIGHT = 10;
 

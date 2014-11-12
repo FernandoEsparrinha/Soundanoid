@@ -21,7 +21,7 @@ public class Ball {
     int y = 0;
     int xa = 3;
     int ya = 3;
-    
+
     private Soundanoid game;
 
     public Ball(Soundanoid game, int x, int y) {
@@ -49,19 +49,31 @@ public class Ball {
             Sound.GAMEOVER.play();
             game.gameOver();
         }
-        if (collision()) {
+        if (collisionRacquet()) {
             game.score++;
             Sound.RACQUET.play();
-            ya = -3;
+            ya = -game.speed;
             y = game.racquet.getTopY() - DIAMETER;
 
-            switch(game.score){
-                case 5: game.speed = 4;
-                        break;
-                case 10: game.speed = 5;
-                        break;
-                case 15: game.speed = 8;
-                        break;
+            switch (game.score) {
+                case 5:
+                    game.speed = 4;
+                    break;
+                case 10:
+                    game.speed = 5;
+                    break;
+                case 15:
+                    game.speed = 8;
+                    break;
+            }
+        }
+
+        if (collisionBlock()) {
+            Sound.BLOCK.play();
+            if (ya == -game.speed) {
+                ya = game.speed;
+            } else if (ya == game.speed) {
+                ya = -game.speed;
             }
         }
 
@@ -77,7 +89,29 @@ public class Ball {
         return new Rectangle(x, y, DIAMETER, DIAMETER);
     }
 
-    private boolean collision() {
+    private boolean collisionRacquet() {
         return game.racquet.getBounds().intersects(getBounds());
     }
+
+    private boolean collisionBlock() {
+        for (int i = 0; i < game.board.blocks.size(); i++) {
+            if (game.board.blocks.get(i).getBounds().intersects(getBounds())){
+                return game.board.blocks.get(i).getBounds().intersects(getBounds());
+            }
+        }
+        return false;
+       
+    }
+    
+//    private int blockHit(){
+//        for(Block temp : game.blocks) {
+//            if(temp.getBounds().intersects(getBounds())){
+//                return game.blocks.indexOf(temp);
+//            }
+//        }
+//        return -1;
+//    }
+    
 }
+
+

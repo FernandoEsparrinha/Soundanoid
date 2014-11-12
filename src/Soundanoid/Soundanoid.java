@@ -12,6 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ public class Soundanoid extends JPanel {
 
     Ball ball = new Ball(this, 125, 0);
     Racquet racquet = new Racquet(this);
+    Board board = new Board(this);
     
     int score = 0;
     int speed = 3;
@@ -64,11 +66,15 @@ public class Soundanoid extends JPanel {
         ball.paint(g2d);
         g2d.setColor(Color.LIGHT_GRAY);
         racquet.paint(g2d);
+        board.paint(g2d);
+        
+        
+        
         
         
         g2d.setColor(Color.BLACK);
-        g2d.setFont(new Font("Helvetica", Font.BOLD, 15));
-        g2d.drawString("Score " + score, 10, 30);
+        g2d.setFont(new Font("Arial", Font.BOLD, 15));
+        g2d.drawString("Score " + score, 10, 500);
 
     }
 
@@ -77,7 +83,7 @@ public class Soundanoid extends JPanel {
         Soundanoid game = new Soundanoid();
         frame.add(game);
         frame.setResizable(false);
-        frame.setSize(400, 500);
+        frame.setSize(400, 550);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -89,6 +95,8 @@ public class Soundanoid extends JPanel {
     }
 
     void gameOver() throws InterruptedException {
+        Sound.stopSounds();
+        
         Thread.sleep(2000);
         JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
         System.exit(ABORT);

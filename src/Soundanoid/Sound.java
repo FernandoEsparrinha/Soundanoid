@@ -18,5 +18,15 @@ public class Sound {
     public static final AudioClip WALL_LEFT = Applet.newAudioClip(Sound.class.getResource("blop.wav"));
     public static final AudioClip WALL_RIGHT = Applet.newAudioClip(Sound.class.getResource("hammer.wav"));
     public static final AudioClip WALL_TOP = Applet.newAudioClip(Sound.class.getResource("slap.wav"));
+    public static final AudioClip BLOCK = Applet.newAudioClip(Sound.class.getResource("pin.wav"));
+    
+    
+    public static void stopSounds(){
+        Sound.RACQUET.stop();
+        Sound.WALL_LEFT.stop();
+        Sound.WALL_RIGHT.stop();
+        Sound.WALL_TOP.stop();
+        Sound.BLOCK.stop();
+    }
     
 }
