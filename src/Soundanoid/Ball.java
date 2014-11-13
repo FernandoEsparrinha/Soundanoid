@@ -8,6 +8,7 @@ package Soundanoid;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,8 +20,8 @@ public class Ball {
 
     int x = 0;
     int y = 0;
-    int xa = 3;
-    int ya = 3;
+    double xa ;
+    double ya ;
 
     private Soundanoid game;
 
@@ -28,32 +29,48 @@ public class Ball {
         this.game = game;
         this.x = x;
         this.y = y;
+        xa = game.speed;
+        ya = game.speed;
     }
 
     void move() throws InterruptedException {
 
+        //Ball hits left wall
         if (x + xa < 0) {
             xa = game.speed;
             Sound.WALL_LEFT.play();
         }
+        
+        //Ball hits right wall
         if (x + xa > game.getWidth() - DIAMETER) {
             xa = -game.speed;
             Sound.WALL_RIGHT.play();
         }
+        
+        //Ball hits ceiling
         if (y + ya < 0) {
-            ya = game.speed;
+            ya = game.speed+1;
+            xa = xa + ((Math.random()*5) - 2.5);
             Sound.WALL_TOP.play();
         }
 
+        //Ball hits floor
         if (y + ya > game.getHeight() - DIAMETER) {
             Sound.GAMEOVER.play();
             game.gameOver();
         }
+        
+        //Ball hits the Racquet
         if (collisionRacquet()) {
             game.score++;
             Sound.RACQUET.play();
-            ya = -game.speed;
-            y = game.racquet.getTopY() - DIAMETER;
+            
+            //The ball gains negative speed, going up
+            ya = -game.speed-1;
+            xa = xa + ((Math.random()*5) - 2.5);
+            
+            //Brings the ball to the top of the Racquet (Unnecessary)
+            //y = game.racquet.getTopY() - DIAMETER;
 
             switch (game.score) {
                 case 5:
@@ -63,20 +80,29 @@ public class Ball {
                     game.speed = 5;
                     break;
                 case 15:
-                    game.speed = 8;
+                    game.speed = 6;
                     break;
             }
         }
 
+        //Ball hits a Block
         if (collisionBlock()) {
             Sound.BLOCK.play();
+            game.board.blocks.remove(blockHit());
+            
             if (ya == -game.speed) {
                 ya = game.speed;
             } else if (ya == game.speed) {
                 ya = -game.speed;
             }
+            
+            if(game.board.blocks.isEmpty()){
+                System.out.println("winner");
+            }
         }
 
+        
+        //Acelerating
         x += xa;
         y += ya;
     }
@@ -93,6 +119,8 @@ public class Ball {
         return game.racquet.getBounds().intersects(getBounds());
     }
 
+    
+    //When the ball hits a Block
     private boolean collisionBlock() {
         for (int i = 0; i < game.board.blocks.size(); i++) {
             if (game.board.blocks.get(i).getBounds().intersects(getBounds())){
@@ -103,14 +131,15 @@ public class Ball {
        
     }
     
-//    private int blockHit(){
-//        for(Block temp : game.blocks) {
-//            if(temp.getBounds().intersects(getBounds())){
-//                return game.blocks.indexOf(temp);
-//            }
-//        }
-//        return -1;
-//    }
+    //Returns the number of the block that was hit
+    private int blockHit(){
+        for(Block temp : game.board.blocks) {
+            if(temp.getBounds().intersects(getBounds())){
+                return game.board.blocks.indexOf(temp);
+            }
+        }
+        return -1;
+    }
     
 }
 

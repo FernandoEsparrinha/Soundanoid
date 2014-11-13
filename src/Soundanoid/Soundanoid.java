@@ -12,7 +12,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,13 +21,13 @@ import javax.swing.JPanel;
  * @author fernando
  */
 public class Soundanoid extends JPanel {
+    int score = 0;
+    int speed = 3;
 
-    Ball ball = new Ball(this, 125, 0);
+    Ball ball = new Ball(this, 125, 450);
     Racquet racquet = new Racquet(this);
     Board board = new Board(this);
     
-    int score = 0;
-    int speed = 3;
     
     private void move() throws InterruptedException {
         ball.move();
