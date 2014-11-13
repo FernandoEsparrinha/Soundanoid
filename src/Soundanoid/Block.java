@@ -44,4 +44,11 @@ public class Block {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
     
+    public int getTopY(){
+        return this.y;
+    }
+    
+    public int getBotY(){
+        return (y+HEIGHT);
+    }
 }

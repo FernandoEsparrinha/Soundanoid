@@ -26,15 +26,16 @@ public class Board {
         this.game = game;
         
         blocks = new ArrayList();
-//        for(int i = 0; i<13; i++){
-//            for(int j = 0; j<10; j++){
-//                blocks.add(new Block(game, i, j));
-//            }
-//        }
+       
+        for(int i = 0; i<13; i++){
+            for(int j = 0; j<10; j++){
+                blocks.add(new Block(game, i, j));
+            }
+        }
         
-        blocks.add(new Block(game, 3, 5));
-        blocks.add(new Block(game, 5, 7));
-        blocks.add(new Block(game, 9, 2));
+//        blocks.add(new Block(game, 3, 5));
+//        blocks.add(new Block(game, 5, 7));
+//        blocks.add(new Block(game, 9, 2));
         
     }
     
@@ -49,5 +50,7 @@ public class Board {
     public Graphics2D getGraphics(){
         return g2d_Board;
     }
+    
+    
     
 }

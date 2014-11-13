@@ -20,8 +20,8 @@ public class Ball {
 
     int x = 0;
     int y = 0;
-    double xa ;
-    double ya ;
+    double xa;
+    double ya;
 
     private Soundanoid game;
 
@@ -40,17 +40,17 @@ public class Ball {
             xa = game.speed;
             Sound.WALL_LEFT.play();
         }
-        
+
         //Ball hits right wall
         if (x + xa > game.getWidth() - DIAMETER) {
             xa = -game.speed;
             Sound.WALL_RIGHT.play();
         }
-        
+
         //Ball hits ceiling
         if (y + ya < 0) {
-            ya = game.speed+1;
-            xa = xa + ((Math.random()*5) - 2.5);
+            ya = game.speed;
+            xa = xa + ((Math.random() * 5) - 2.5);
             Sound.WALL_TOP.play();
         }
 
@@ -59,21 +59,21 @@ public class Ball {
             Sound.GAMEOVER.play();
             game.gameOver();
         }
-        
+
         //Ball hits the Racquet
         if (collisionRacquet()) {
             game.score++;
             Sound.RACQUET.play();
-            
+
             //The ball gains negative speed, going up
-            ya = -game.speed-1;
-            xa = xa + ((Math.random()*5) - 2.5);
-            
+            ya = -game.speed;
+            xa = xa + ((Math.random() * 5) - 2.5);
+
             //Brings the ball to the top of the Racquet (Unnecessary)
             //y = game.racquet.getTopY() - DIAMETER;
-
             switch (game.score) {
                 case 5:
+                    Sound.BACKGROUND1.loop();
                     game.speed = 4;
                     break;
                 case 10:
@@ -87,21 +87,25 @@ public class Ball {
 
         //Ball hits a Block
         if (collisionBlock()) {
-            Sound.BLOCK.play();
+            Sound.BLOCK1.play();
             game.board.blocks.remove(blockHit());
             
+            //y = game.board.blocks.get(blockHit()).getBotY() + DIAMETER;
+
             if (ya == -game.speed) {
                 ya = game.speed;
             } else if (ya == game.speed) {
                 ya = -game.speed;
             }
             
-            if(game.board.blocks.isEmpty()){
+            
+            
+            //Checks if the board is empty
+            if (game.board.blocks.isEmpty()) {
                 System.out.println("winner");
             }
         }
 
-        
         //Acelerating
         x += xa;
         y += ya;
@@ -119,28 +123,25 @@ public class Ball {
         return game.racquet.getBounds().intersects(getBounds());
     }
 
-    
     //When the ball hits a Block
     private boolean collisionBlock() {
         for (int i = 0; i < game.board.blocks.size(); i++) {
-            if (game.board.blocks.get(i).getBounds().intersects(getBounds())){
-                return game.board.blocks.get(i).getBounds().intersects(getBounds());
+            if (game.board.blocks.get(i).getBounds().intersects(getBounds())) {
+                return true;
             }
         }
         return false;
-       
+
     }
-    
+
     //Returns the number of the block that was hit
-    private int blockHit(){
-        for(Block temp : game.board.blocks) {
-            if(temp.getBounds().intersects(getBounds())){
+    private int blockHit() {
+        for (Block temp : game.board.blocks) {
+            if (temp.getBounds().intersects(getBounds())) {
                 return game.board.blocks.indexOf(temp);
             }
         }
         return -1;
     }
-    
+
 }
-
-
