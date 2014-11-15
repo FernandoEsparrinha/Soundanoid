@@ -32,7 +32,7 @@ public class Soundanoid extends JPanel {
     int score = 0;
     int speed = 3;
 
-    Ball ball = new Ball(this, 150, 400);
+    Ball ball = new Ball(this, 350, 300);
     Racquet racquet = new Racquet(this);
     Board board = new Board(this);
 
