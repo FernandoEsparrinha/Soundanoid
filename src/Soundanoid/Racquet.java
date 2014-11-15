@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
  * @author fernando
  */
 public class Racquet {
+
     int x = 150;
     int xa = 0;
     private Soundanoid game;
@@ -47,6 +48,7 @@ public class Racquet {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             xa = 6;
         }
+        
     }
 
     public Rectangle getBounds() {
