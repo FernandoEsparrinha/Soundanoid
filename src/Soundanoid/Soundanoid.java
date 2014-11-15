@@ -76,7 +76,7 @@ public class Soundanoid extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         try {
-            this.background = ImageIO.read(Soundanoid.class.getResourceAsStream("background.png"));
+            this.background = ImageIO.read(Soundanoid.class.getResourceAsStream("background2.png"));
         } catch (IOException ex) {
             Logger.getLogger(Soundanoid.class.getName()).log(Level.SEVERE, null, ex);
         }
