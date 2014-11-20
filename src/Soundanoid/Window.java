@@ -5,6 +5,7 @@
  */
 package Soundanoid;
 
+import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -23,11 +24,13 @@ public class Window extends JFrame{
     public Window() throws IOException{
         super();
         
-        this.icon = ImageIO.read(Soundanoid.class.getResourceAsStream("icon.png"));
+        this.icon = ImageIO.read(Soundanoid.class.getResourceAsStream("pic/icon.png"));
         this.setIconImage(icon);
+
+        setLayout(new BorderLayout());
         
         setResizable(false);
-        setSize(400, 550);
+        setSize(400, 580);
         setLocationRelativeTo(null);
         setTitle("Soundanoid");
         setIconImage(icon);

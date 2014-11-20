@@ -41,14 +41,19 @@ public class Block {
     }
     
     public Rectangle getBounds(){
-        return new Rectangle(x, y, WIDTH, HEIGHT);
+        return new Rectangle(x,y,WIDTH,HEIGHT);
     }
     
-    public int getTopY(){
-        return this.y;
+    public Rectangle getBoundsCenter(){
+        return new Rectangle(x+1, y, WIDTH-1, HEIGHT);
     }
     
-    public int getBotY(){
-        return (y+HEIGHT);
+    public Rectangle getBoundsLeft(){
+        return new Rectangle(x, y+5, 1, HEIGHT-10);
     }
+    
+    public Rectangle getBoundsRight(){
+        return new Rectangle(x+29, y+5, 1, HEIGHT-10);
+    }
+    
 }

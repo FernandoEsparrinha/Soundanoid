@@ -64,10 +64,20 @@ public class Ball {
         if (collisionRacquet()) {
             game.score++;
             Sound.RACQUET.play();
+            
 
+            //Ball hits left side of the Racquet
+            if(collisionRacquetLeft()){
+                xa-= 4;
+            }
+            
+            //Ball hits right side of the Racquet
+            if(collisionRacquetRight()){
+                xa+= 4;
+            }
+            
             //The ball gains negative speed, going up
             ya = -game.speed;
-            xa = xa + ((Math.random() * 5) - 2.5);
 
             //Brings the ball to the top of the Racquet (Unnecessary)
             //y = game.racquet.getTopY() - DIAMETER;
@@ -85,25 +95,28 @@ public class Ball {
             }
         }
 
-        //Ball hits a Block
+        //Ball hits the center of a Block
         if (collisionBlock()) {
             Sound.BLOCK1.play();
             game.board.blocks.remove(blockHit());
-            
-            //y = game.board.blocks.get(blockHit()).getBotY() + DIAMETER;
-
+            //inverts Y component of the movement
             if (ya == -game.speed) {
                 ya = game.speed;
             } else if (ya == game.speed) {
                 ya = -game.speed;
             }
-            
-            
-            
             //Checks if the board is empty
             if (game.board.blocks.isEmpty()) {
                 System.out.println("winner");
             }
+        }
+        
+        //Ball hits left side of a Block
+        if(collisionBlockLeft() || collisionBlockRight()) {
+            Sound.BLOCK1.play();
+            game.board.blocks.remove(blockHit());
+            //inverts X component of the movement
+            xa = -xa;
         }
 
         //Acelerating
@@ -123,10 +136,42 @@ public class Ball {
         return game.racquet.getBounds().intersects(getBounds());
     }
 
+    private boolean collisionRacquetCenter(){
+        return game.racquet.getBoundsCenter().intersects(getBounds());
+    }
+    
+    private boolean collisionRacquetLeft(){
+        return game.racquet.getBoundsLeft().intersects(getBounds());
+    }
+    
+    private boolean collisionRacquetRight(){
+        return game.racquet.getBoundsRight().intersects(getBounds());
+    }
+    
     //When the ball hits a Block
     private boolean collisionBlock() {
         for (int i = 0; i < game.board.blocks.size(); i++) {
-            if (game.board.blocks.get(i).getBounds().intersects(getBounds())) {
+            if (game.board.blocks.get(i).getBoundsCenter().intersects(getBounds())) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+    
+    private boolean collisionBlockLeft() {
+        for (int i = 0; i < game.board.blocks.size(); i++) {
+            if (game.board.blocks.get(i).getBoundsLeft().intersects(getBounds())) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+    
+    private boolean collisionBlockRight() {
+        for (int i = 0; i < game.board.blocks.size(); i++) {
+            if (game.board.blocks.get(i).getBoundsRight().intersects(getBounds())) {
                 return true;
             }
         }

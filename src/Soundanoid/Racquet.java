@@ -54,6 +54,18 @@ public class Racquet {
     public Rectangle getBounds() {
         return new Rectangle(x, Y, WIDTH, HEIGHT);
     }
+    
+    public Rectangle getBoundsCenter() {
+        return new Rectangle(x+10, Y, WIDTH-20, HEIGHT);
+    }
+    
+    public Rectangle getBoundsLeft() {
+        return new Rectangle(x, Y, 10, HEIGHT);
+    }
+    
+    public Rectangle getBoundsRight() {
+        return new Rectangle(x+(WIDTH-10), Y, 10, HEIGHT);
+    }
 
     public int getTopY() {
         return Y;

@@ -5,21 +5,17 @@
  */
 package Soundanoid;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -67,7 +63,7 @@ public class Soundanoid extends JPanel {
         setFocusable(true);
     }
 
-    public BufferedImage background;
+//    public BufferedImage background;
     
     @Override
     public void paint(Graphics g) {
@@ -75,13 +71,13 @@ public class Soundanoid extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        try {
-            this.background = ImageIO.read(Soundanoid.class.getResourceAsStream("background2.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(Soundanoid.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            this.background = ImageIO.read(Soundanoid.class.getResourceAsStream("background2.png"));
+//        } catch (IOException ex) {
+//            Logger.getLogger(Soundanoid.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
-        g2d.drawImage(background, 0, 0, null);
+//        g2d.drawImage(background, 0, 0, null);
         g2d.setColor(Color.red);
         
         ball.paint(g2d);
@@ -92,7 +88,7 @@ public class Soundanoid extends JPanel {
 
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 15));
-        g2d.drawString("Score " + score, 300, 20);
+//        g2d.drawString("Score " + score, 300, 20);
 
     }
 
@@ -104,11 +100,17 @@ public class Soundanoid extends JPanel {
         //Initializes the game
         Soundanoid game = new Soundanoid();
 
-        frame.add(game);
-
+        JPanel t = new JPanel();
+        JLabel l = new JLabel("Score :"+ game.score);
+        t.add(l);
+        
+        frame.add(t, BorderLayout.NORTH);
+        frame.add(game, BorderLayout.CENTER);
+        
         while (true) {
             game.move();
             game.repaint();
+            l.setText("Score :"+ game.score);
             Thread.sleep(10);
         }
 
