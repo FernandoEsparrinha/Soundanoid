@@ -29,27 +29,27 @@ public class Ball {
         this.game = game;
         this.x = x;
         this.y = y;
-        xa = game.speed;
-        ya = game.speed;
+        xa = game.ballSpeed;
+        ya = game.ballSpeed;
     }
 
     void move() throws InterruptedException {
 
         //Ball hits left wall
         if (x + xa < 0) {
-            xa = game.speed;
+            xa = game.ballSpeed;
             Sound.WALL_LEFT.play();
         }
 
         //Ball hits right wall
         if (x + xa > game.getWidth() - DIAMETER) {
-            xa = -game.speed;
+            xa = -game.ballSpeed;
             Sound.WALL_RIGHT.play();
         }
 
         //Ball hits ceiling
         if (y + ya < 0) {
-            ya = game.speed;
+            ya = game.ballSpeed;
             xa = xa + ((Math.random() * 5) - 2.5);
             Sound.WALL_TOP.play();
         }
@@ -62,7 +62,7 @@ public class Ball {
 
         //Ball hits the Racquet
         if (collisionRacquet()) {
-            game.score++;
+            game.gameScore++;
             Sound.RACQUET.play();
             
 
@@ -77,20 +77,20 @@ public class Ball {
             }
             
             //The ball gains negative speed, going up
-            ya = -game.speed;
+            ya = -game.ballSpeed;
 
             //Brings the ball to the top of the Racquet (Unnecessary)
             //y = game.racquet.getTopY() - DIAMETER;
-            switch (game.score) {
+            switch (game.gameScore) {
                 case 5:
                     Sound.BACKGROUND1.loop();
-                    game.speed = 4;
+                    game.ballSpeed = 4;
                     break;
                 case 10:
-                    game.speed = 5;
+                    game.ballSpeed = 5;
                     break;
                 case 15:
-                    game.speed = 6;
+                    game.ballSpeed = 6;
                     break;
             }
         }
@@ -98,15 +98,15 @@ public class Ball {
         //Ball hits the center of a Block
         if (collisionBlock()) {
             Sound.BLOCK1.play();
-            game.board.blocks.remove(blockHit());
+            game.board.listOfBlocks.remove(blockHit());
             //inverts Y component of the movement
-            if (ya == -game.speed) {
-                ya = game.speed;
-            } else if (ya == game.speed) {
-                ya = -game.speed;
+            if (ya == -game.ballSpeed) {
+                ya = game.ballSpeed;
+            } else if (ya == game.ballSpeed) {
+                ya = -game.ballSpeed;
             }
             //Checks if the board is empty
-            if (game.board.blocks.isEmpty()) {
+            if (game.board.listOfBlocks.isEmpty()) {
                 System.out.println("winner");
             }
         }
@@ -114,7 +114,7 @@ public class Ball {
         //Ball hits left side of a Block
         if(collisionBlockLeft() || collisionBlockRight()) {
             Sound.BLOCK1.play();
-            game.board.blocks.remove(blockHit());
+            game.board.listOfBlocks.remove(blockHit());
             //inverts X component of the movement
             xa = -xa;
         }
@@ -150,8 +150,8 @@ public class Ball {
     
     //When the ball hits a Block
     private boolean collisionBlock() {
-        for (int i = 0; i < game.board.blocks.size(); i++) {
-            if (game.board.blocks.get(i).getBoundsCenter().intersects(getBounds())) {
+        for (int i = 0; i < game.board.listOfBlocks.size(); i++) {
+            if (game.board.listOfBlocks.get(i).getBoundsCenter().intersects(getBounds())) {
                 return true;
             }
         }
@@ -160,8 +160,8 @@ public class Ball {
     }
     
     private boolean collisionBlockLeft() {
-        for (int i = 0; i < game.board.blocks.size(); i++) {
-            if (game.board.blocks.get(i).getBoundsLeft().intersects(getBounds())) {
+        for (int i = 0; i < game.board.listOfBlocks.size(); i++) {
+            if (game.board.listOfBlocks.get(i).getBoundsLeft().intersects(getBounds())) {
                 return true;
             }
         }
@@ -170,8 +170,8 @@ public class Ball {
     }
     
     private boolean collisionBlockRight() {
-        for (int i = 0; i < game.board.blocks.size(); i++) {
-            if (game.board.blocks.get(i).getBoundsRight().intersects(getBounds())) {
+        for (int i = 0; i < game.board.listOfBlocks.size(); i++) {
+            if (game.board.listOfBlocks.get(i).getBoundsRight().intersects(getBounds())) {
                 return true;
             }
         }
@@ -181,9 +181,9 @@ public class Ball {
 
     //Returns the number of the block that was hit
     private int blockHit() {
-        for (Block temp : game.board.blocks) {
+        for (Block temp : game.board.listOfBlocks) {
             if (temp.getBounds().intersects(getBounds())) {
-                return game.board.blocks.indexOf(temp);
+                return game.board.listOfBlocks.indexOf(temp);
             }
         }
         return -1;

@@ -14,22 +14,20 @@ import java.util.ArrayList;
  */
 public class Board {
     private Soundanoid game;
-    Graphics2D g2d_Board;
-    
-    ArrayList<Block> blocks ;
+    ArrayList<Block> listOfBlocks ;
     
     
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 200;
+    private static final int BOARD_WIDTH = 400;
+    private static final int BOARD_HEIGHT = 200;
     
     public Board(Soundanoid game){
         this.game = game;
         
-        blocks = new ArrayList();
+        listOfBlocks = new ArrayList();
        
         for(int i = 0; i<13; i++){
             for(int j = 0; j<10; j++){
-                blocks.add(new Block(game, i, j));
+                listOfBlocks.add(new Block(game, i, j));
             }
         }
         
@@ -40,15 +38,11 @@ public class Board {
     }
     
     public void paint(Graphics2D g){
-        g2d_Board = (Graphics2D) g.create(0, 0, WIDTH, HEIGHT);
+        g.create(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
         
-        for(int i = 0; i < blocks.size(); i++){
-                blocks.get(i).paint(g);
+        for(int i = 0; i < listOfBlocks.size(); i++){
+                listOfBlocks.get(i).paint(g);
         }
-    }
-    
-    public Graphics2D getGraphics(){
-        return g2d_Board;
     }
     
     

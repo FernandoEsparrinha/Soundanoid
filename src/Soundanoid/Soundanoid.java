@@ -5,7 +5,6 @@
  */
 package Soundanoid;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -13,9 +12,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -25,14 +21,14 @@ import javax.swing.JPanel;
  */
 public class Soundanoid extends JPanel {
 
-    int score = 0;
-    int speed = 3;
+    int gameScore = 0;
+    int ballSpeed = 3;
 
     Ball ball = new Ball(this, 350, 300);
     Racquet racquet = new Racquet(this);
     Board board = new Board(this);
 
-    private void move() throws InterruptedException {
+    public void move() throws InterruptedException {
         ball.move();
         racquet.move();
 
@@ -76,8 +72,8 @@ public class Soundanoid extends JPanel {
 //        } catch (IOException ex) {
 //            Logger.getLogger(Soundanoid.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        
 //        g2d.drawImage(background, 0, 0, null);
+        
         g2d.setColor(Color.red);
         
         ball.paint(g2d);
@@ -92,29 +88,7 @@ public class Soundanoid extends JPanel {
 
     }
 
-    public static void main(String[] args) throws InterruptedException, IOException {
-
-        //Initializes the window
-        Window frame = new Window();
-
-        //Initializes the game
-        Soundanoid game = new Soundanoid();
-
-        JPanel t = new JPanel();
-        JLabel l = new JLabel("Score :"+ game.score);
-        t.add(l);
-        
-        frame.add(t, BorderLayout.NORTH);
-        frame.add(game, BorderLayout.CENTER);
-        
-        while (true) {
-            game.move();
-            game.repaint();
-            l.setText("Score :"+ game.score);
-            Thread.sleep(10);
-        }
-
-    }
+    
 
     void gameOver() throws InterruptedException {
         Sound.stopSounds();

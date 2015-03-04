@@ -15,60 +15,60 @@ import java.awt.event.KeyEvent;
  */
 public class Racquet {
 
-    int x = 150;
-    int xa = 0;
+    int racquet_X_position = 150;
+    int racquet_X_aceleration = 0;
     private Soundanoid game;
 
-    private static final int Y = 510;
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 10;
+    private static final int RACQUET_Y_POSITION = 510;
+    private static final int RACQUET_WIDTH = 60;
+    private static final int RACQUET_HEIGHT = 10;
 
     public Racquet(Soundanoid game) {
         this.game = game;
     }
 
     public void move() {
-        if (x + xa > 0 && x + xa < game.getWidth() - 60) {
-            x = x + xa;
+        if (racquet_X_position + racquet_X_aceleration > 0 && racquet_X_position + racquet_X_aceleration < game.getWidth() - 60) {
+            racquet_X_position = racquet_X_position + racquet_X_aceleration;
         }
     }
 
     public void paint(Graphics2D g) {
-        g.fillRect(x, Y, 60, 10);
+        g.fillRect(racquet_X_position, RACQUET_Y_POSITION, RACQUET_WIDTH, RACQUET_HEIGHT);
     }
 
     public void keyReleased(KeyEvent e) {
-        xa = 0;
+        racquet_X_aceleration = 0;
     }
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            xa = -6;
+            racquet_X_aceleration = -6;
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            xa = 6;
+            racquet_X_aceleration = 6;
         }
         
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, Y, WIDTH, HEIGHT);
+        return new Rectangle(racquet_X_position, RACQUET_Y_POSITION, RACQUET_WIDTH, RACQUET_HEIGHT);
     }
     
     public Rectangle getBoundsCenter() {
-        return new Rectangle(x+10, Y, WIDTH-20, HEIGHT);
+        return new Rectangle(racquet_X_position+10, RACQUET_Y_POSITION, RACQUET_WIDTH-20, RACQUET_HEIGHT);
     }
     
     public Rectangle getBoundsLeft() {
-        return new Rectangle(x, Y, 10, HEIGHT);
+        return new Rectangle(racquet_X_position, RACQUET_Y_POSITION, 10, RACQUET_HEIGHT);
     }
     
     public Rectangle getBoundsRight() {
-        return new Rectangle(x+(WIDTH-10), Y, 10, HEIGHT);
+        return new Rectangle(racquet_X_position+(RACQUET_WIDTH-10), RACQUET_Y_POSITION, 10, RACQUET_HEIGHT);
     }
 
     public int getTopY() {
-        return Y;
+        return RACQUET_Y_POSITION;
     }
 
 }
